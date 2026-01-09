@@ -1,11 +1,42 @@
-const express = require("express")
-const app = express()
-const port = 3003
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
-app.get("/captain", async (req, res) => {
-    return res.send("Hi captain")
-})
+dotenv.config();
 
-app.listen(port, () => {
-    console.log("server is running on 3003")
-})
+const connectDB = require("./config/db");
+const redis = require("./config/redis");
+const socketInit = require("./sockets");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+
+app.get("/captain", (req, res) => {
+  res.send("Hi Captain!");
+});
+
+const port = process.env.PORT || 3003;
+
+connectDB()
+  .then(() => {
+    console.log("Connected to MongoDB");
+
+    const server = http.createServer(app);
+
+    const io = new Server(server, {
+      cors: { origin: "*" },
+    });
+
+    socketInit(io);
+
+    server.listen(port, () => {
+      console.log(`Captain Service running on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to MongoDB", err);
+  });
