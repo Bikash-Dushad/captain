@@ -14,12 +14,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const routes = require("./router");
+
 
 app.get("/captain", (req, res) => {
   res.send("Hi Captain!");
 });
 
 const port = process.env.PORT || 3003;
+
+routes.forEach(({ path, router }) => {
+  app.use(`/api${path}`, router);
+});
 
 connectDB()
   .then(() => {
