@@ -3,6 +3,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const { connectProducer } = require("./kafka/producer");
 
 dotenv.config();
 
@@ -14,8 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const routes = require("./router");
-
+const routes = require("./routers");
 
 app.get("/captain", (req, res) => {
   res.send("Hi Captain!");
@@ -38,7 +38,7 @@ connectDB()
     });
 
     socketInit(io);
-
+    connectProducer();
     server.listen(port, () => {
       console.log(`Captain Service running on http://localhost:${port}`);
     });

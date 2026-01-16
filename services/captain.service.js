@@ -1,5 +1,7 @@
 const CaptainModel = require("../models/captain.schema");
 const redis = require("../config/redis");
+const { producer } = require("../kafka/producer");
+const Topics = require("../kafka/topics");
 const {
   captainRegisterValidation,
 } = require("../validators/captain.validator");
@@ -49,6 +51,19 @@ const captainRegisterService = async (payload) => {
     documents,
   });
   await newCaptain.save();
+
+  await producer.send({
+    topic: Topics.CAPTAIN_REGISTERED,
+    messages: [
+      {
+        value: JSON.stringify({
+          authId,
+          captainId: newCaptain._id || captain._id,
+          isRegistered: true,
+        }),
+      },
+    ],
+  });
   return newCaptain;
 };
 
