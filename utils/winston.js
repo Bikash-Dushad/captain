@@ -11,7 +11,7 @@ const logger = createLogger({
   ),
   transports: [
     new DailyRotateFile({
-      filename: "logs/citizen-%DATE%.log",
+      filename: "logs/captain-%DATE%.log",
       datePattern: "YYYY-MM-DD",
       zippedArchive: true,
       maxSize: "20m",
