@@ -1,4 +1,8 @@
-const { captainRegisterService } = require("../services/captain.service");
+const {
+  captainRegisterService,
+  captainProfileService,
+  getCaptainByCaptainIdService,
+} = require("../services/captain.service");
 const { handleError } = require("../utils/error.handler");
 
 const captainRegister = async (req, res) => {
@@ -19,6 +23,35 @@ const captainRegister = async (req, res) => {
   }
 };
 
+const captainProfile = async (req, res) => {
+  try {
+    const authId = req.user.id;
+    const data = await captainProfileService(authId);
+    return res.status(200).json({
+      responseCode: 200,
+      message: "Captain Profile fetched successfully",
+      data,
+    });
+  } catch (error) {
+    return handleError(res, error, "captainProfile");
+  }
+};
+
+const getCaptainByCaptainId = async (req, res) => {
+  try {
+    const { captainId } = req.body;
+    const data = await getCaptainByCaptainIdService(captainId);
+    return res.status(200).json({
+      responseCode: 200,
+      message: "Captain fetched successfully",
+      data,
+    });
+  } catch (error) {
+    return handleError(res, error, "getCaptainByCaptainId");
+  }
+};
 module.exports = {
   captainRegister,
+  captainProfile,
+  getCaptainByCaptainId,
 };

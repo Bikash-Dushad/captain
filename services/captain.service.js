@@ -67,6 +67,33 @@ const captainRegisterService = async (payload) => {
   return newCaptain;
 };
 
+const captainProfileService = async (authId) => {
+  if (!authId) {
+    throw new Error("Auth Id is required");
+  }
+  const captain = await CaptainModel.findOne({ authId: authId });
+  if (!captain) {
+    throw new Error("Captain not found");
+  }
+  return captain;
+};
+
+const getCaptainByCaptainIdService = async (captainId) => {
+  if (!captainId) {
+    throw new Error("Captain Id is required");
+  }
+  const captain = await CaptainModel.findById(captainId);
+  if (!captain) {
+    throw new Error("Captain not found");
+  }
+  const data = {
+    captain,
+  };
+  return data;
+};
+
 module.exports = {
   captainRegisterService,
+  captainProfileService,
+  getCaptainByCaptainIdService,
 };
