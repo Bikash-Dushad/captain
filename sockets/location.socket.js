@@ -1,7 +1,7 @@
 const redis = require("../config/redis");
 
 module.exports = (io) => {
-  io.on("connection", (socket) => {
+  io.on("Connection", (socket) => {
     console.log("Socket connected:", socket.user.authId);
 
     socket.on("LOCATION_UPDATE", async ({ lat, lng }) => {
