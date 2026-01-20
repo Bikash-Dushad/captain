@@ -2,6 +2,7 @@ const {
   captainRegisterService,
   captainProfileService,
   getCaptainByCaptainIdService,
+  getOnlineCaptainsService,
 } = require("../services/captain.service");
 const { handleError } = require("../utils/error.handler");
 
@@ -50,8 +51,23 @@ const getCaptainByCaptainId = async (req, res) => {
     return handleError(res, error, "getCaptainByCaptainId");
   }
 };
+
+const getOnlineCaptains = async (req, res) => {
+  try {
+    const data = await getOnlineCaptainsService();
+    return res.status(200).json({
+      responseCode: 200,
+      message: "Captains fetched successfully",
+      data,
+    });
+  } catch (error) {
+    return handleError(res, error, "getOnlineCaptains");
+  }
+};
+
 module.exports = {
   captainRegister,
   captainProfile,
   getCaptainByCaptainId,
+  getOnlineCaptains,
 };

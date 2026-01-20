@@ -92,8 +92,23 @@ const getCaptainByCaptainIdService = async (captainId) => {
   return data;
 };
 
+const getOnlineCaptainsService = async () => {
+  const authIds = await redis.zrange("captains:online", 0, -1);
+  const positions = await redis.geopos("captains:online", ...authIds);
+  const data = authIds.map((authId, index) => {
+    const [lng, lat] = positions[index];
+    return {
+      authId,
+      lat: parseFloat(lat),
+      lng: parseFloat(lng),
+    };
+  });
+  return data;
+};
+
 module.exports = {
   captainRegisterService,
   captainProfileService,
   getCaptainByCaptainIdService,
+  getOnlineCaptainsService,
 };

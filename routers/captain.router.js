@@ -6,6 +6,7 @@ const {
   captainRegister,
   captainProfile,
   getCaptainByCaptainId,
+  getOnlineCaptains,
 } = require("../controllers/captain.controller");
 
 CaptainRouter.post("/captainRegister", authMiddleware, captainRegister);
@@ -15,5 +16,7 @@ CaptainRouter.post(
   authMiddleware,
   getCaptainByCaptainId,
 );
+
+CaptainRouter.get("/getOnlineCaptains", authMiddleware, getOnlineCaptains);
 
 module.exports = CaptainRouter;
