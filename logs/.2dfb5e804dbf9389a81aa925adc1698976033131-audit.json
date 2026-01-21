@@ -24,6 +24,11 @@
             "date": 1768892493200,
             "name": "logs\\captain-2026-01-20.log",
             "hash": "3531c1aedf2234953edc8708a9dfa32d0eab01d1eead121160f2c25b73c52352"
+        },
+        {
+            "date": 1768977241528,
+            "name": "logs\\captain-2026-01-21.log",
+            "hash": "e654ea3fc2b4aafcfeba788627814c9761cfcec3da0db31b5bef2628ef369c3c"
         }
     ],
     "hashType": "sha256"
