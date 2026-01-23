@@ -3,7 +3,6 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { connectProducer } = require("./kafka/producer");
 
 dotenv.config();
 
@@ -38,7 +37,6 @@ connectDB()
     });
 
     socketInit(io);
-    connectProducer();
     server.listen(port, () => {
       console.log(`Captain Service running on http://localhost:${port}`);
     });

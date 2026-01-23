@@ -1,6 +1,4 @@
 const redis = require("../config/redis");
-const { producer } = require("../kafka/producer");
-const Topics = require("../kafka/topics");
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
@@ -18,41 +16,12 @@ module.exports = (io) => {
       ) {
         await redis.geoadd("captains:online", lng, lat, socket.user.id);
         console.log("location added", lng, lat);
-
-        await producer.send({
-          topic: Topics.CAPTAIN_LOC_UPDATED,
-          messages: [
-            {
-              value: JSON.stringify({
-                id: socket.user.id,
-                lat,
-                lng,
-                timestamp: Date.now(),
-                online: true,
-              }),
-            },
-          ],
-        });
-        console.log("📤 location sent to kafka");
       }
     });
 
     socket.on("disconnect", async () => {
       await redis.zrem("captains:online", socket.user.id);
       console.log("Captain offline");
-      await producer.send({
-        topic: Topics.CAPTAIN_LOC_UPDATED,
-        messages: [
-          {
-            value: JSON.stringify({
-              id: socket.user.id,
-              online: false,
-              timestamp: Date.now(),
-            }),
-          },
-        ],
-      });
-      console.log("📤 offline status sent to kafka");
     });
   });
 };
