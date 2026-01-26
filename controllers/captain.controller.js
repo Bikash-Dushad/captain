@@ -4,7 +4,22 @@ const {
   getCaptainByCaptainIdService,
   getOnlineCaptainsService,
 } = require("../services/captain.service");
+const { imageService } = require("../services/image.service");
 const { handleError } = require("../utils/error.handler");
+
+const uploadImage = async (req, res) => {
+  try {
+    const file = req.file;
+    const data = await imageService(file);
+    return res.status(200).json({
+      responseCode: 200,
+      message: "File uploaded successfully",
+      data,
+    });
+  } catch (error) {
+    return handleError(res, error, "uploadImage");
+  }
+};
 
 const captainRegister = async (req, res) => {
   try {
@@ -66,6 +81,7 @@ const getOnlineCaptains = async (req, res) => {
 };
 
 module.exports = {
+  uploadImage,
   captainRegister,
   captainProfile,
   getCaptainByCaptainId,

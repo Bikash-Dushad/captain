@@ -64,6 +64,7 @@ const captainRegisterService = async (payload) => {
       },
     ],
   });
+  console.log("data sent in kafka")
   return newCaptain;
 };
 

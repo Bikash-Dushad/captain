@@ -15,7 +15,11 @@ module.exports = (io) => {
         prevLocation[0][1] !== lat
       ) {
         await redis.geoadd("captains:online", lng, lat, socket.user.id);
-        console.log("location added", lng, lat);
+        console.log(
+          `location added for ${socket.user.id} at ${Date.now()}`,
+          lng,
+          lat,
+        );
       }
     });
 

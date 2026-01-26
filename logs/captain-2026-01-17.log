@@ -1,7 +1,0 @@
-2026-01-17T17:27:35.637Z [error]: [captainProfile] Unexpected error: Auth Id is required
-2026-01-17T17:28:13.220Z [error]: [captainProfile] Unexpected error: Auth Id is required
-2026-01-17T17:30:54.560Z [error]: [captainProfile] Unexpected error: Auth Id is required
-2026-01-17T17:34:12.588Z [error]: [getCaptainByCaptainId] Unexpected error: Cast to ObjectId failed for value "{ captainId: '696bbb8b0972295ca2043871' }" (type Object) at path "_id" for model "Captain"
-2026-01-17T17:34:34.823Z [error]: [getCaptainByCaptainId] Unexpected error: Cast to ObjectId failed for value "{ captainId: { captainId: '696bbb8b0972295ca2043871' } }" (type Object) at path "_id" for model "Captain"
-2026-01-17T17:35:03.651Z [error]: [getCaptainByCaptainId] Unexpected error: Cast to ObjectId failed for value "{ captainId: { captainId: '696bbb8b0972295ca2043871' } }" (type Object) at path "_id" for model "Captain"
-2026-01-17T17:35:18.845Z [error]: [getCaptainByCaptainId] Unexpected error: Cast to ObjectId failed for value "{ captainId: { captainId: '696bbb8b0972295ca2043871' } }" (type Object) at path "_id" for model "Captain"
