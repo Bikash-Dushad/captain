@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 const routes = require("./routers");
+const { connectProducer } = require("./kafka/producer");
 
 app.get("/captain", (req, res) => {
   res.send("Hi Captain!");
@@ -40,6 +41,7 @@ connectDB()
     server.listen(port, () => {
       console.log(`Captain Service running on http://localhost:${port}`);
     });
+    connectProducer();
   })
   .catch((err) => {
     console.error("Failed to connect to MongoDB", err);

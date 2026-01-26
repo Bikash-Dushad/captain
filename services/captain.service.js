@@ -50,7 +50,6 @@ const captainRegisterService = async (payload) => {
     bankDetails,
     documents,
   });
-  await newCaptain.save();
 
   await producer.send({
     topic: Topics.CAPTAIN_REGISTERED,
@@ -64,7 +63,9 @@ const captainRegisterService = async (payload) => {
       },
     ],
   });
-  console.log("data sent in kafka")
+  console.log("data sent in kafka");
+  await newCaptain.save();
+
   return newCaptain;
 };
 
