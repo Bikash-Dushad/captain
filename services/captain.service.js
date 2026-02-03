@@ -52,7 +52,7 @@ const captainRegisterService = async (payload) => {
   });
 
   await producer.send({
-    topic: Topics.CAPTAIN_REGISTERED,
+    topic: Topics.AUTHUSER_REGISTERED,
     messages: [
       {
         value: JSON.stringify({

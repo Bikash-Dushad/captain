@@ -5,7 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
+const { startBookingConsumer } = require("./kafka/booking.consumer");
 const connectDB = require("./config/db");
 const redis = require("./config/redis");
 const socketInit = require("./sockets");
@@ -42,6 +42,7 @@ connectDB()
       console.log(`Captain Service running on http://localhost:${port}`);
     });
     connectProducer();
+    startBookingConsumer(io);
   })
   .catch((err) => {
     console.error("Failed to connect to MongoDB", err);
