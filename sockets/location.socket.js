@@ -2,12 +2,15 @@ const redis = require("../config/redis");
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
+    console.log("Captain online");
+
     //stores the updated captains location to redis
     socket.on("LOCATION_UPDATE", async ({ lat, lng }) => {
       const prevLocation = await redis.geopos(
         "captains:online",
         socket.user.id,
       );
+      console.log(prevLocation);
       if (
         !prevLocation[0] ||
         prevLocation[0] === null ||

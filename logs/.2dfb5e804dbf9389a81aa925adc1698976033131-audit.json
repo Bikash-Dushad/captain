@@ -9,6 +9,16 @@
             "date": 1770102431293,
             "name": "logs\\captain-2026-02-03.log",
             "hash": "4a2ae309cbe93090d5bdb95ae02bfa7c8017c6d869f9b70334f804268f616c21"
+        },
+        {
+            "date": 1770222867275,
+            "name": "logs\\captain-2026-02-04.log",
+            "hash": "0ab1ecd1f6f575f6e90a90a49aac8eab443cb9e0ab0330501ebab7d134a4599f"
+        },
+        {
+            "date": 1770281973808,
+            "name": "logs\\captain-2026-02-05.log",
+            "hash": "01d82f2792ef20e2edce42be20ebf066ce05b9d24a66023c1b3927f5dff12a55"
         }
     ],
     "hashType": "sha256"

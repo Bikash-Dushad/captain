@@ -1,6 +1,7 @@
 const kafka = require("../config/kafka");
+const redis = require("../config/redis");
 const { NEW_BOOKING_REQUEST } = require("./topics");
-const consumer = kafka.consumer({ groupId: "captain-service-group" });
+const consumer = kafka.consumer({ groupId: "booking-service-group" });
 
 const startBookingConsumer = async (io) => {
   await consumer.connect();
@@ -8,6 +9,7 @@ const startBookingConsumer = async (io) => {
     topic: NEW_BOOKING_REQUEST,
     fromBeginning: false,
   });
+  console.log("booking service kafka consumer connected");
   await consumer.run({
     eachMessage: async ({ message }) => {
       try {
@@ -25,7 +27,10 @@ const startBookingConsumer = async (io) => {
 };
 
 const notifyNearbyCaptains = async (io, booking) => {
-  const { lat, lng } = booking.pickupLocation;
+  console.log("booking", booking);
+  const lat = booking.pickupLocation.coordinates[1];
+  const lng = booking.pickupLocation.coordinates[0];
+  console.log("lat", lat, "lng", lng);
 
   const captains = await redis.georadius(
     "captains:online",
@@ -41,7 +46,7 @@ const notifyNearbyCaptains = async (io, booking) => {
     console.log("⚠️ No captains available nearby");
     return 0;
   }
-
+  console.log("nearby captains are ", captains);
   captains.forEach(([captainId, [captLng, captLat], distance]) => {
     io.to(`captain:${captainId}`).emit("NEW_BOOKING_REQUEST", {
       bookingId: booking.bookingId,
