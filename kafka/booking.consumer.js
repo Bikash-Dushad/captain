@@ -32,7 +32,7 @@ const notifyNearbyCaptains = async (io, booking) => {
   const lng = booking.pickupLocation.coordinates[0];
   console.log("lat", lat, "lng", lng);
 
-  const captains = await redis.georadius(
+  const captainsAuth = await redis.georadius(
     "captains:online",
     lng,
     lat,
@@ -42,13 +42,13 @@ const notifyNearbyCaptains = async (io, booking) => {
     "WITHDIST",
   );
 
-  if (captains.length === 0) {
+  if (captainsAuth.length === 0) {
     console.log("⚠️ No captains available nearby");
     return 0;
   }
-  console.log("nearby captains are ", captains);
-  captains.forEach(([captainId, [captLng, captLat], distance]) => {
-    io.to(`captain:${captainId}`).emit("NEW_BOOKING_REQUEST", {
+  console.log("nearby captains are ", captainsAuth);
+  captainsAuth.forEach(([captainAuthId, [captLng, captLat], distance]) => {
+    io.to(`captainAuth:${captainAuthId}`).emit("NEW_BOOKING_REQUEST", {
       bookingId: booking.bookingId,
       pickupLocation: booking.pickupLocation,
       captainLocation: {
@@ -62,10 +62,10 @@ const notifyNearbyCaptains = async (io, booking) => {
       },
     });
 
-    console.log(`📢 Booking ${booking.bookingId} sent to captain ${captainId}`);
+    console.log(`📢 Booking ${booking.bookingId} sent to captain ${captainAuthId}`);
   });
 
-  return captains.length;
+  return captainsAuth.length;
 };
 
 module.exports = { startBookingConsumer };
